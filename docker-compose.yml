@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  clean_arch_db:
+    container_name: clean_arch_db
+    image: postgres:16-alpine
+    restart: unless-stopped
+    shm_size: 4g
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=clean_arch_db_user
+      - POSTGRES_PASSWORD=db_password
+      - POSTGRES_DB=clean_arch_db
+      - PGDATA=/data/db
+      - PGTZ=GMT
+    expose:
+      - 5432
+    volumes:
+      - /data/postgres/clean_arch_db:/data/db/:z
+
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    restart: always
+    environment:
+      - SERVICES=sqs,sns,s3
+      - '127.0.0.1:4566:4566'
+      - '127.0.0.1:4510-4559:4510-4559'
+    ports:
+      - '4566-4597:4566-4597'
+    volumes:
+      - /data/localstack:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock

@@ -1,0 +1,17 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"command": "pnpm start:debug",
+			"name": "Start Debug",
+			"request": "launch",
+			"type": "node-terminal"
+		},
+		{
+			"command": "pnpm test:debug",
+			"name": "Start Debug Test",
+			"request": "launch",
+			"type": "node-terminal"
+		}
+	]
+}
